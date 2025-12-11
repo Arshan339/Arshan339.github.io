@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flappy Bird</title>
+    <style>
+        body {
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        canvas {
+            background: #70c5ce;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="gameCanvas" width="320" height="480"></canvas>
+
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Bird
+let birdX = 50;
+let birdY = 150;
+let gravity = 0.4;
+let velocity = 0;
+let jumpPower = -7;
+
+// Pipes
+let pipeX = 320;
+let pipeGap = 120;
+let pipeTop = Math.floor(Math.random() * 200) + 50;
+let pipeWidth = 50;
+
+// Score
+let score = 0;
+
+// Jump when clicking or pressing space
+document.addEventListener("keydown", flap);
+document.addEventListener("click", flap);
+
+function flap() {
+    velocity = jumpPower;
+}
+
+// Game Loop
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Bird movement
+    velocity += gravity;
+    birdY += velocity;
+
+    // Draw bird
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(birdX, birdY, 20, 20);
+
+    // Pipes movement
+    pipeX -= 2;
+
+    if (pipeX < -pipeWidth) {
+        pipeX = canvas.width;
+        pipeTop = Math.floor(Math.random() * 250) + 50;
+        score++;
+    }
+
+    // Draw pipes
+    ctx.fillStyle = "green";
+    ctx.fillRect(pipeX, 0, pipeWidth, pipeTop);  
+    ctx.fillRect(pipeX, pipeTop + pipeGap, pipeWidth, canvas.height);
+
+    // Score
+    ctx.fillStyle = "white";
+    ctx.font = "24px Arial";
+    ctx.fillText("Score: " + score, 10, 30);
+
+    // Collision detection
+    if (
+        birdY > canvas.height ||
+        birdY < 0 ||
+        (birdX + 20 > pipeX && birdX < pipeX + pipeWidth &&
+         (birdY < pipeTop || birdY + 20 > pipeTop + pipeGap))
+    ) {
+        alert("Game Over! Score: " + score);
+        document.location.reload();
+    }
+
+    requestAnimationFrame(update);
+}
+
+update();
+</script>
+
+</body>
+</html>
