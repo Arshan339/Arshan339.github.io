@@ -51,10 +51,10 @@
     </div>
 </section>
 
-<!-- 🎮 NUMBER GUESSING GAME START -->
-<div class="game-box">
-    <h2>🎯 Guess the Number</h2>
-    <p>I am thinking of a number between <b>1 and 100</b>.</p>
+<!-- 🎮 NUMBER GUESSING GAME -->
+<div id="guessing-game">
+    <h2>Number Guessing Game</h2>
+    <p>Guess a number between 1 and 100!</p>
 
     <input type="number" id="guessInput" placeholder="Enter your guess">
     <button onclick="checkGuess()">Guess</button>
@@ -72,13 +72,13 @@
         if (guess === secretNumber) {
             result.textContent = "🎉 Correct! You guessed the number!";
         } else if (guess > secretNumber) {
-            result.textContent = "Too high! 📈 Try again.";
+            result.textContent = "Too high! 🔼 Try again.";
         } else {
-            result.textContent = "Too low! 📉 Try again.";
+            result.textContent = "Too low! 🔽 Try again.";
         }
     }
 </script>
-<!-- 🎮 NUMBER GUESSING GAME END -->
+
 
 <footer>
     <p>© 2025 Arshan • Portfolio Website</p>
