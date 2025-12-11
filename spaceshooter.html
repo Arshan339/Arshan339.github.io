@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Space Shooter</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            border: 3px solid white;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="gameCanvas" width="400" height="600"></canvas>
+
+<script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Player
+let player = {
+    x: canvas.width / 2 - 20,
+    y: canvas.height - 60,
+    width: 40,
+    height: 40,
+    speed: 5
+};
+
+// Arrays
+let bullets = [];
+let enemies = [];
+let score = 0;
+
+// Controls
+let keys = {};
+document.addEventListener("keydown", (e) => keys[e.key] = true);
+document.addEventListener("keyup", (e) => keys[e.key] = false);
+
+// Shoot bullets
+document.addEventListener("keydown", (e) => {
+    if (e.key === " ") {
+        bullets.push({
+            x: player.x + player.width / 2 - 3,
+            y: player.y,
+            width: 6,
+            height: 15,
+            speed: 7
+        });
+    }
+});
+
+// Spawn enemies
+setInterval(() => {
+    enemies.push({
+        x: Math.random() * (canvas.width - 40),
+        y: -40,
+        width: 40,
+        height: 40,
+        speed: 2 + Math.random() * 2
+    });
+}, 700);
+
+// Game loop
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Move player
+    if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
+    if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
+
+    // Draw player
+    ctx.fillStyle = "cyan";
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    // Move bullets
+    bullets.forEach((b, i) => {
+        b.y -= b.speed;
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(b.x, b.y, b.width, b.height);
+
+        if (b.y < 0) bullets.splice(i, 1);
+    });
+
+    // Enemies
+    enemies.forEach((e, ei) => {
+        e.y += e.speed;
+        ctx.fillStyle = "red";
+        ctx.fillRect(e.x, e.y, e.width, e.height);
+
+        // Bullet collision
+        bullets.forEach((b, bi) => {
+            if (b.x < e.x + e.width &&
+                b.x + b.width > e.x &&
+                b.y < e.y + e.height &&
+                b.y + b.height > e.y) {
+                enemies.splice(ei, 1);
+                bullets.splice(bi, 1);
+                score++;
+            }
+        });
+
+        // Player hit
+        if (
+            player.x < e.x + e.width &&
+            player.x + player.width > e.x &&
+            player.y < e.y + e.height &&
+            player.y + player.height > e.y
+        ) {
+            alert("GAME OVER! Score: " + score);
+            document.location.reload();
+        }
+    });
+
+    // Score
+    ctx.fillStyle = "white";
+    ctx.font = "22px Arial";
+    ctx.fillText("Score: " + score, 10, 30);
+
+    requestAnimationFrame(update);
+}
+
+update();
+</script>
+</body>
+</html>
