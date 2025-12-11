@@ -51,33 +51,6 @@
     </div>
 </section>
 
-<!-- 🎮 NUMBER GUESSING GAME -->
-<div id="guessing-game">
-    <h2>Number Guessing Game</h2>
-    <p>Guess a number between 1 and 100!</p>
-
-    <input type="number" id="guessInput" placeholder="Enter your guess">
-    <button onclick="checkGuess()">Guess</button>
-
-    <p id="result"></p>
-</div>
-
-<script>
-    let secretNumber = Math.floor(Math.random() * 100) + 1;
-
-    function checkGuess() {
-        let guess = Number(document.getElementById("guessInput").value);
-        let result = document.getElementById("result");
-
-        if (guess === secretNumber) {
-            result.textContent = "🎉 Correct! You guessed the number!";
-        } else if (guess > secretNumber) {
-            result.textContent = "Too high! 🔼 Try again.";
-        } else {
-            result.textContent = "Too low! 🔽 Try again.";
-        }
-    }
-</script>
 
 
 <footer>
