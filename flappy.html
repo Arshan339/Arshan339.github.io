@@ -48,6 +48,9 @@ let score = 0;
 // Jump when clicking or pressing space
 document.addEventListener("keydown", flap);
 document.addEventListener("click", flap);
+document.addEventListener("touchstart", () => {
+  bird.velocity = -8; // same as jump key
+});
 
 function flap() {
     velocity = jumpPower;
