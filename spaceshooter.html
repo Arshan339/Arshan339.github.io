@@ -26,6 +26,8 @@
 <script>
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+canvas.width = Math.min(window.innerWidth, 400);
+canvas.height = Math.min(window.innerHeight, 600);
 
 // Player
 let player = {
