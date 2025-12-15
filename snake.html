@@ -39,6 +39,8 @@
   <script>
     const canvas = document.getElementById("gameBoard");
     const ctx = canvas.getContext("2d");
+canvas.width = Math.min(window.innerWidth, 400);
+canvas.height = Math.min(window.innerHeight, 600);
 
     const box = 20;
     let score = 0;
@@ -113,5 +115,6 @@
 
 </body>
 </html>
+
 
 
