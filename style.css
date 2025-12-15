@@ -110,3 +110,8 @@ footer {
 .back-btn:hover {
     background: #444;
 }
+body {
+  margin: 0;
+  overflow: hidden;
+  touch-action: none;
+}
