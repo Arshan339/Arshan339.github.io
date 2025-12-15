@@ -72,6 +72,13 @@ document.addEventListener("keydown", (e) => {
         });
     }
 });
+canvas.addEventListener("touchmove", e => {
+  player.x = e.touches[0].clientX - player.width / 2;
+});
+
+canvas.addEventListener("touchstart", () => {
+  shoot();
+});
 
 // Spawn enemies
 setInterval(() => {
